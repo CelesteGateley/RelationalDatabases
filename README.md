@@ -37,7 +37,7 @@ Singleton Design Pattern:
 
 
 Data Validation and Encryption:
-- Password Hashing(?)
+- Password Hashing(?) (password_hash())
 
 
 Criteria:
