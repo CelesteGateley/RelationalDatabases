@@ -8,7 +8,7 @@
 Relational Databases Part 2 Coursework
 <p>
 <b>Requirements</b>
-<br>
+<br><br>
 MVC Architecture (Non-Framework)          (10%)
 <br>
 DAO Design Pattern                        (10%)
@@ -16,9 +16,9 @@ DAO Design Pattern                        (10%)
 Singleton Design Pattern                  (5%)
 <br>
 Data Validation and Encryption            (5%)
-<br>
-Fullfillment of the following Criteria:   (20%)
 <br><br>
+Fullfillment of the following Criteria:   (20%)
+<br>
 - Registration of a new Customer<br>
 - Purchasing of Films (Relavent data to be inserted into the database)<br>
 - Customers can Edit their personal and account details<br>
@@ -26,7 +26,7 @@ Fullfillment of the following Criteria:   (20%)
 </p>
 <p>
 <b>Breaking down of the Requirements</b>
-<br>
+<br><br>
 MVC Architecture:<br>
 - Model - View - Controller<br>
 - Seperation as per models from part 1 of this assignment<br>
@@ -38,10 +38,10 @@ DAO Design Pattern:<br>
 Singleton Design Pattern:<br>
 - Only one instance of an object will be created at once<br>
 - https://www.tutorialspoint.com/design_pattern/singleton_pattern.htm<br>
-<br><br>
+<br>
 Data Validation and Encryption:<br>
 - Password Hashing(?) (password_hash())<br>
-<br><br>
+<br>
 Criteria:<br>
 - Ability to log-in and register<br>
 - Ability to view all available films<br>
