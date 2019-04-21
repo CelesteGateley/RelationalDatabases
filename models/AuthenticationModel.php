@@ -9,8 +9,9 @@ class AuthenticationModel {
     }
 
     final public function getUserId(string $email) : int{
-        $prepStatement = $this->databaseModel->getPreparedStatement('SELECT personid FROM fss_Person WHERE personemail = :email;');
-        $res = $prepStatement->execute([':email' => $email]);
+        //$prepStatement = $this->databaseModel->getPreparedStatement('SELECT personid FROM fss_Person WHERE personemail = :email;');
+        //$res = $prepStatement->qu([':email' => $email]);
+        $res = $this->databaseModel->query('SELECT personid FROM fss_Person WHERE personemail = \''.$email.'\';');
         return $res[0][0];
     }
 

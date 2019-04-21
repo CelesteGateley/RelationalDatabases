@@ -1,4 +1,6 @@
 <?php /** @noinspection TypeUnsafeComparisonInspection */
+include '../models/DatabaseModel.php';
+include '../models/AuthenticationModel.php';
 
 function setupSession() : bool {
     if (session_status() != PHP_SESSION_ACTIVE) {

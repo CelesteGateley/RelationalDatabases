@@ -1,4 +1,5 @@
 <?php
+include 'controllers/SessionController.php';
 function register(string $email, string $password, string $name, string $phone, AuthenticationModel $auth) : int {
     $res = $auth->registerUser($email, $password, $name, $phone);
     if ($res >= 0) {

@@ -3,17 +3,26 @@
 class DatabaseModel {
 
     private $conn;
-    protected $DB_NAME = 'u1755082';
     protected $DB_USER = 'u1755082';
     protected $DB_PASS = '20xCCvC983rD';
-    protected $DB_HOST = 'localhost';
+    protected $data = 'mysql:host=localhost;dbname=u1755082;charset=utf8;';
 
     public function __construct() {
-        $data = 'mysql:host=' . $this->DB_HOST . ';dbname=' . $this->DB_NAME . ';charset=utf8mb5;';
-        try { $this->conn = new PDO($data, $this->DB_USER, $this->DB_PASS); }
-        catch (PDOException $e) { throw new PDOException($e->getMessage(), (int)$e->getCode()); }
+        $this->connect();
         $this->updatePasswords();
     }
+
+    private function connect() {
+        try { $this->conn = new PDO($this->data, $this->DB_USER, $this->DB_PASS); }
+        catch (PDOException $e) { throw new PDOException($e->getMessage(), (int)$e->getCode()); }
+    }
+
+    final public function __sleep() : array { return array(); }
+
+    final public function __wakeup()  {
+        $this->connect();
+    }
+
 
     final public function  getConnection() : PDO { return $this->conn; }
 
@@ -39,7 +48,7 @@ class DatabaseModel {
         $counter = 0;
         foreach ($res as $id) {
             $query = $this->getPreparedStatement('UPDATE fss_Customer SET custpassword = :pass WHERE custid = :id;');
-            $query->execute(['pass' => password_hash('pass', PASSWORD_DEFAULT), 'id' => $id]);
+            $query->execute(['pass' => password_hash('pass', PASSWORD_DEFAULT), 'id' => $id[0]]);
             $counter++;
         }
         return $counter;
