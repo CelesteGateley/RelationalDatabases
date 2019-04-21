@@ -1,10 +1,8 @@
-<?php
-function login(string $email, string $password, AuthenticationModel $auth) : bool {
-    $isAuthenticated = $auth->authenticate($email, $password);
+<?php /** @noinspection TypeUnsafeComparisonInspection */
+function login(string $email, string $password) : bool {
+    verifySession();
+    $isAuthenticated = $_SESSION['auth']->authenticate($email, $password);
     if ($isAuthenticated) {
-        /** @noinspection TypeUnsafeComparisonInspection */
-        if (session_status() == PHP_SESSION_ACTIVE) { session_destroy(); }
-        session_start();
         $_SESSION['email'] = $email;
         $_SESSION['logged_in'] = true;
         return true;
@@ -13,8 +11,11 @@ function login(string $email, string $password, AuthenticationModel $auth) : boo
 }
 
 function logout() : bool {
-    /** @noinspection TypeUnsafeComparisonInspection */
-    $sessionStatus = session_status() == PHP_SESSION_ACTIVE;
-    if ($sessionStatus) { session_destroy(); }
-    return $sessionStatus;
+    verifySession();
+    if (isset($_SESSION['logged_in']) && $_SESSION['logged_in']) {
+        $_SESSION['email'] = '';
+        $_SESSION['logged_in'] = false;
+        return true;
+    }
+    return false;
 }
