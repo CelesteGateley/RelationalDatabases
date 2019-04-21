@@ -25,29 +25,14 @@ class AuthenticationModel {
         return $pArray[0][0];
     }
 
-    private function isPasswordHashed(int $id) : bool {
-        $pass = $this->getPassword($id);
-        return $pass === 'pass';
-    }
-
     final public function authenticate(string $email, string $password) : bool {
         $id = $this->getUserId($email);
         return $this->authenticateUser($id, $password);
     }
 
     private function authenticateUser(int $id, string $password) : bool {
-        if (!$this->isPasswordHashed($id)) {
-            $this->updatePassword($id, $password, $password);
-        }
-        $hashedPw = password_hash($password, PASSWORD_DEFAULT);
         $correctPw = $this->getPassword($id);
-        return $hashedPw === $correctPw;
-    }
-
-    final public function authenticatePreHash(string $email, string $password): bool {
-        $id = $this->getUserId($email);
-        $correctPw = $this->getPassword($id);
-        return $password === $correctPw;
+        return password_verify($password, $correctPw);
     }
 
     final public function updatePassword(int $id, string $oldPassword, string $newPassword) : bool {

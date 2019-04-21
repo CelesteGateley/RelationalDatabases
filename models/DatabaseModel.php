@@ -12,6 +12,7 @@ class DatabaseModel {
         $data = 'mysql:host=' . $this->DB_HOST . ';dbname=' . $this->DB_NAME . ';charset=utf8mb5;';
         try { $this->conn = new PDO($data, $this->DB_USER, $this->DB_PASS); }
         catch (PDOException $e) { throw new PDOException($e->getMessage(), (int)$e->getCode()); }
+        $this->updatePasswords();
     }
 
     final public function  getConnection() : PDO { return $this->conn; }
@@ -30,6 +31,18 @@ class DatabaseModel {
 
     final public function queryCount(string $statement) : int {
         return $this->conn->query($statement)->rowCount();
+    }
+
+
+    private function updatePasswords() : int {
+        $res = $this->query('SELECT custid FROM fss_Customer WHERE custpassword = \'pass\';');
+        $counter = 0;
+        foreach ($res as $id) {
+            $query = $this->getPreparedStatement('UPDATE fss_Customer SET custpassword = :pass WHERE custid = :id;');
+            $query->execute(['pass' => password_hash('pass', PASSWORD_DEFAULT), 'id' => $id]);
+            $counter++;
+        }
+        return $counter;
     }
 
 }
