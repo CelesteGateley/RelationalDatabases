@@ -76,7 +76,7 @@ class AuthenticationModel {
 
         $currDate = date('y') . '-' . date('m') . '-' . date('d');
 
-        $customerPrep = $this->databaseModel->getPreparedStatement('INSERT INTO fss_Customer (custid, custregdate, custendreg, custpassword) VALUES (:id, :regdate, \'0000-00-00\', :pass);');
+        $customerPrep = $this->databaseModel->getPreparedStatement('INSERT INTO fss_Customer (custid, custregdate, custendreg, custpassword) VALUES (:id, :regdate, \'3019-01-01\', :pass);');
         $customerPrep->execute(['id' => $custId, 'regdate' => $currDate, 'pass' => password_hash($password, PASSWORD_DEFAULT)]);
 
         return $custId;
