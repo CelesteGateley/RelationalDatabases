@@ -3,7 +3,7 @@ include 'SessionController.php';
 function logout() : bool {
     verifySession();
     if (isset($_SESSION['logged_in']) && $_SESSION['logged_in']) {
-        unset($_SESSION['email']);
+        unset($_SESSION['email'], $_SESSION['basket']);
         $_SESSION['logged_in'] = false;
         return true;
     }

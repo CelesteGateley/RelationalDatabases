@@ -22,9 +22,9 @@ if (isset($_POST['email'], $_POST['password'])) {
 
     } else {
         echo "<script type='text/javascript'>alert('Invalid Email or Password');</script>";
-        echo "<script type='text/javascript'>location.href = '../public/index.php';</script>";
+        echo "<script type='text/javascript'>location.href = '../public/login.php';</script>";
     }
 } else {
     echo "<script type='text/javascript'>alert('Please enter an Email and Password!');</script>";
-    echo "<script type='text/javascript'>location.href = '../public/index.php';</script>";
+    echo "<script type='text/javascript'>location.href = '../public/login.php';</script>";
 }

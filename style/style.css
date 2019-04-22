@@ -1,0 +1,29 @@
+body {
+    font-size: 16px;
+}
+
+form {
+    display: inline; padding: 5px;
+}
+
+div {
+    display: inline;
+}
+
+.product-table {
+    padding-left: 5%;
+    padding-right: 5%;
+}
+
+td {
+    text-align: center; border: 1px solid black;
+}
+tr {
+    text-align: center; border: 1px solid black;
+}
+th {
+    text-align: center; border: 1px solid black;
+}
+.account {
+    float: right;
+}

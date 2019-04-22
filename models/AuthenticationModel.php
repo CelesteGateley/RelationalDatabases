@@ -67,7 +67,7 @@ class AuthenticationModel {
         $phoneNumber = str_replace(' ', '', $phoneNumber);
         if (!filter_Var($cleanEmail, FILTER_VALIDATE_EMAIL)) { return -1; }
         if ($this->doesAccountExist($cleanEmail)) { return -2; }
-        if (!preg_match('(0|\+44)[1-9][0-9]{9}', $phoneNumber)) { return -3; }
+        if (!preg_match('/(0|\+44)[1-9][0-9]{9}/', $phoneNumber)) { return -3; }
 
         $personPrep = $this->databaseModel->getPreparedStatement('INSERT INTO fss_Person (personname, personphone, personemail) VALUES (:name, :phone, :email);');
         $personPrep->execute(['name' => addslashes($fullName), 'phone' => $phoneNumber, 'email' => $cleanEmail]);
@@ -76,7 +76,7 @@ class AuthenticationModel {
 
         $currDate = date('y') . '-' . date('m') . '-' . date('d');
 
-        $customerPrep = $this->databaseModel->getPreparedStatement('INSERT INTO fss_Customer (custid, custregdate, custenddate, custpassword) VALUES (:id, :regdate, \'0000-00-00\', :pass);');
+        $customerPrep = $this->databaseModel->getPreparedStatement('INSERT INTO fss_Customer (custid, custregdate, custendreg, custpassword) VALUES (:id, :regdate, \'0000-00-00\', :pass);');
         $customerPrep->execute(['id' => $custId, 'regdate' => $currDate, 'pass' => password_hash($password, PASSWORD_DEFAULT)]);
 
         return $custId;
