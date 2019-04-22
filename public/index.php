@@ -7,18 +7,18 @@
     include '../controllers/SessionController.php';
     setupSession();
     if (isset($_SESSION['email'])) {
-        echo "You are logged in as " . $_SESSION['email'] . "<br>";
+        echo 'You are logged in as ' . $_SESSION['email'] . '<br>';
     } else {
-        echo "You are not logged in";
+        echo 'You are not logged in';
     }
 ?>
-<form action="login.php" method="post">
+<form action="../controllers/LoginController.php" method="post">
     Email:<br>
     <input type="text" name="email"><br>
     Password:<br>
     <input type="password" name="password"><br>
     <input type="submit" value="Login">
 </form>
-<form action="logout.php"><input type="submit" value="logout"></form>
+<form action="../controllers/LogoutController.php"><input type="submit" value="logout"></form>
 </body>
 </html>

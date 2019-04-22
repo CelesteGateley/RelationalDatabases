@@ -1,6 +1,5 @@
 <?php
 
-
 class AuthenticationModel {
     private $databaseModel;
 
@@ -9,8 +8,9 @@ class AuthenticationModel {
     }
 
     final public function getUserId(string $email) : int{
-        //$prepStatement = $this->databaseModel->getPreparedStatement('SELECT personid FROM fss_Person WHERE personemail = :email;');
-        //$res = $prepStatement->qu([':email' => $email]);
+        $cleanEmail = filter_var($email, FILTER_SANITIZE_EMAIL);
+        if (!filter_Var($cleanEmail, FILTER_VALIDATE_EMAIL)) { return -1; }
+        if (!$this->doesAccountExist($cleanEmail)) { return -1; }
         $res = $this->databaseModel->query('SELECT personid FROM fss_Person WHERE personemail = \''.$email.'\';');
         return $res[0][0];
     }
@@ -28,6 +28,7 @@ class AuthenticationModel {
 
     final public function authenticate(string $email, string $password) : bool {
         $id = $this->getUserId($email);
+        if ($id === -1) { return false; }
         return $this->authenticateUser($id, $password);
     }
 
@@ -45,7 +46,9 @@ class AuthenticationModel {
     }
 
     private function doesAccountExist(string $email) : bool {
-        $emailCount = $this->databaseModel->queryCount('SELECT personid FROM fss_Person WHERE personemail = ' . $email . ';');
+        $prepStatement = $this->databaseModel->getPreparedStatement('SELECT COUNT(personid) FROM fss_Person WHERE personemail = :email;');
+        $prepStatement->execute(['email' => $email]);
+        $emailCount = $prepStatement->fetchColumn();
         return $emailCount > 0;
     }
 

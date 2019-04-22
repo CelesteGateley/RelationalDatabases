@@ -1,4 +1,4 @@
-<?php
+<?php /** @noinspection MissingReturnTypeInspection */
 
 class DatabaseModel {
 
@@ -8,8 +8,9 @@ class DatabaseModel {
     protected $data = 'mysql:host=localhost;dbname=u1755082;charset=utf8;';
 
     public function __construct() {
-        $this->connect();
-        $this->updatePasswords();
+        try { $this->conn = new PDO($this->data, $this->DB_USER, $this->DB_PASS); }
+        catch (PDOException $e) { throw new PDOException($e->getMessage(), (int)$e->getCode()); }
+        //$this->updatePasswords();
     }
 
     private function connect() {
@@ -37,12 +38,7 @@ class DatabaseModel {
     final public function query(string $statement) : array {
         return $this->conn->query($statement)->fetchAll();
     }
-
-    final public function queryCount(string $statement) : int {
-        return $this->conn->query($statement)->rowCount();
-    }
-
-
+    /** @noinspection UnusedFunction */
     private function updatePasswords() : int {
         $res = $this->query('SELECT custid FROM fss_Customer WHERE custpassword = \'pass\';');
         $counter = 0;
