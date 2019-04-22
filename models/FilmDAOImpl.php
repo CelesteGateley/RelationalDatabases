@@ -8,9 +8,9 @@ class FilmDAOImpl implements FilmDAO {
     private $ratingArray = array();
     private $db;
 
-    protected $getFilmQuery = 'SELECT fss_film.filmid, fss_film.filmtitle, fss_film.filmdescription, fss_film.ratid, fss_dvdstock.stocklevel 
-                               FROM fss_film, fss_dvdstock WHERE fss_film.filmid = fss_dvdstock.filmid AND fss_dvdstock.shopid = 1;';
-    protected $getRatingQuery = 'SELECT ratid, filmrating FROM fss_rating;';
+    protected $getFilmQuery = 'SELECT fss_Film.filmid, fss_Film.filmtitle, fss_Film.filmdescription, fss_Film.ratid, fss_DVDStock.stocklevel 
+                               FROM fss_Film, fss_DVDStock WHERE fss_Film.filmid = fss_DVDStock.filmid AND fss_DVDStock.shopid = 1;';
+    protected $getRatingQuery = 'SELECT ratid, filmrating FROM fss_Rating;';
 
     public function __construct(DatabaseModel $db) {
         $this->db = $db;

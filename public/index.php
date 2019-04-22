@@ -1,4 +1,5 @@
 <html lang="en">
+<?php ini_set('display_errors', 1); ini_set('display_startup_errors', 1); error_reporting(E_ALL); ?>
 <head>
     <title>Film store</title>
     <link rel="stylesheet" type="text/css" href="../style/style.css">
