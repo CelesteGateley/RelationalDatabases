@@ -13,7 +13,7 @@ function addToBasket($id) {
         echo "<script type='text/javascript'>alert('You cannot add any more of this item!');</script>";
         echo "<script type='text/javascript'>location.href = '../public/index.php';</script>";
     }
-    echo "<script type='text/javascript'>alert('Item added to basket!');</script>";
+    //echo "<script type='text/javascript'>alert('Item added to basket!');</script>";
     echo "<script type='text/javascript'>location.href = '../public/index.php';</script>";
 }
 
@@ -27,7 +27,7 @@ function removeFromBasket($id) {
         echo "<script type='text/javascript'>alert('That item is not in your basket!');</script>";
         echo "<script type='text/javascript'>location.href = '../public/basket.php';</script>";
     }
-    echo "<script type='text/javascript'>alert('Item removed to basket!');</script>";
+    //echo "<script type='text/javascript'>alert('Item removed to basket!');</script>";
     if (isset($_SESSION['basket'])) {
         echo "<script type='text/javascript'>location.href = '../public/basket.php';</script>";
     } else {

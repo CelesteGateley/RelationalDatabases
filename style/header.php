@@ -13,6 +13,7 @@
     </div>
     <div class="account" style="float: right;">
         <?php
+        echo '<form action="index.php"><input type="submit" value="Homepage"></form>';
         if (isset($_SESSION['email'], $_SESSION['logged_in']) && $_SESSION['logged_in']) {
             echo '<form action="basket.php"><input type="submit" value="View Basket"></form>';
             echo '<form action="../controllers/LogoutController.php"><input type="submit" value="Logout"></form>';
