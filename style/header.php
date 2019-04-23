@@ -1,7 +1,7 @@
 <!--  -->
 <div id="header" class="header">
     <div class="login-status">
-        /** @noinspection UnknownInspectionInspection */<?php
+        <?php
         include '../controllers/SessionController.php';
         setupSession();
         if (isset($_SESSION['email'], $_SESSION['logged_in']) && $_SESSION['logged_in']) {
