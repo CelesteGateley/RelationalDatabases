@@ -31,12 +31,15 @@
                 echo '<td>' . $_SESSION['films']->getRatingKey()[$film->getRatingId()] . '</td>';
                 if (isset($_SESSION['logged_in']) && $_SESSION['logged_in']) {
                     echo '<td>' . $stock . '</td>';
-                    echo '<td><form method="post" action="../controllers/BasketController.php">
+                    if ($stock <= 0) { echo '<td>N/A</td>'; }
+                    else {
+                        echo '<td><form method="post" action="../controllers/BasketController.php">
                                <input type="hidden" name="id" value="' . $film->getId() . '">
                                <input type="hidden" name="method" value="add">
                                <input type="submit" value="Add">
                                </form>
                           </td>';
+                    }
                 }
                 echo '</tr>';
             }

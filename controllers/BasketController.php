@@ -35,7 +35,7 @@ function removeFromBasket($id) {
     }
 }
 
-function purchaseBasket(string $password) : int {
+function purchaseBasket(string $password, string $cardNo, string $cardType, int $cardExpDay, int $cardExpMonth) {
     verifySession();
     $addId = $_SESSION['auth']->getAddressId($_SESSION['email']);
     if (!$_SESSION['auth']->authenticate($_SESSION['email'], $password)) {
@@ -44,6 +44,9 @@ function purchaseBasket(string $password) : int {
     } else if ($addId === -1) {
         echo "<script type='text/javascript'>alert('You need to set an address!');</script>";
         echo "<script type='text/javascript'>location.href = '../public/basket.php';</script>";
+    } else if (($cardExpDay <= 31 && $cardExpDay >= 1) && ($cardExpMonth <= 12 && $cardExpMonth >= 1) && !preg_match('/\d{10}/',$cardNo)) {
+            echo "<script type='text/javascript'>alert('Invalid Card Information!');</script>";
+            echo "<script type='text/javascript'>location.href = '../public/basket.php';</script>";
     } else if (isset($_SESSION['basket']) && !empty($_SESSION['basket'])) {
         $total = 0;
         foreach ($_SESSION['basket'] as $id => $amount) {
@@ -53,11 +56,16 @@ function purchaseBasket(string $password) : int {
         $currDate = date('y') . '-' . date('m') . '-' . date('d');
         /** Updates Payment Table */
         $prepStm = $_SESSION['db']->getPreparedStatement('INSERT INTO fss_Payment (amount, paydate, shopid, ptid)  VALUES (:amount, :purchdate, 1, 2);');
-        $prepStm->execute(['date' => $currDate, 'amount' => $total]);
+        $prepStm->execute(['purchdate' => $currDate, 'amount' => $total]);
         $payId = $_SESSION['db']->getLastId();
         /** Updates Online Payment Table */
         $prepStm = $_SESSION['db']->getPreparedStatement('INSERT INTO fss_OnlinePayment VALUES (:id, :account);');
         $prepStm->execute(['id' => $payId, 'account' => $_SESSION['auth']->getUserId($_SESSION['email'])]);
+        /** Update Card Payment Table */
+        $cardExp = $cardExpMonth . ':' . $cardExpDay;
+        $prepStm = $_SESSION['db']->getPreparedStatement('INSERT INTO fss_CardPayment VALUES (:id, :cno, :ctype, :cexpr);');
+        $prepStm->execute(['id' => $payId, 'cno' => $cardNo, 'ctype' => $cardType, 'cexpr' => $cardExp]);
+
         foreach ($_SESSION['basket'] as $filmId => $amount) {
             /** Gets Current Film Price */
             $filmPrice = $_SESSION['films']->getFilmById($filmId)->getCost();
@@ -82,13 +90,13 @@ function purchaseBasket(string $password) : int {
 }
 
 
-if (isset($_POST['method'], $_POST['id']) || isset($_POST['method'], $_POST['password'])) {
+if (isset($_POST['method'], $_POST['id']) || isset($_POST['method'], $_POST['password'], $_POST['card_info'])) {
     if ($_POST['method'] === 'add') {
         addToBasket($_POST['id']);
     } else if ($_POST['method'] === 'remove') {
         removeFromBasket($_POST['id']);
     } else if ($_POST['method'] === 'purchase') {
-        purchaseBasket($_POST['password']);
+        purchaseBasket($_POST['password'], $_POST['card_info']['cardNo'], $_POST['card_info']['cardType'], $_POST['card_info']['cardExp']['expDay'], $_POST['card_info']['cardExp']['expMonth']);
     } else {
         echo "<script type='text/javascript'>location.href = '../public/index.php';</script>";
     }

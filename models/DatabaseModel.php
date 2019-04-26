@@ -10,7 +10,7 @@ class DatabaseModel {
     public function __construct() {
         try { $this->conn = new PDO($this->data, $this->DB_USER, $this->DB_PASS); }
         catch (PDOException $e) { throw new PDOException($e->getMessage(), (int)$e->getCode()); }
-        //$this->updatePasswords();
+        $this->updatePasswords();
     }
 
     private function connect() {
@@ -24,7 +24,7 @@ class DatabaseModel {
 
     final public function getLastId(): int { return (int)$this->conn->lastInsertId();}
 
-    final public function  getConnection() : PDO { return $this->conn; }
+    final public function getConnection() : PDO { return $this->conn; }
 
     final public function execute(string $statement) : int {
         return $this->conn->exec($statement);

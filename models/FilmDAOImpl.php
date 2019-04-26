@@ -54,7 +54,7 @@ class FilmDAOImpl implements FilmDAO {
     }
 
     private function updateStock(int $id, int $stock) : int {
-        $stmt = $this->db->getPreparedStatement('UPDATE fss_dvdstock SET stocklevel = :stock WHERE filmid = :id AND shopid = 1;');
+        $stmt = $this->db->getPreparedStatement('UPDATE fss_DVDStock SET stocklevel = :stock WHERE filmid = :id AND shopid = 1;');
         $stmt->execute(['stock' => $stock, 'id' => $id]);
         return $stock;
     }

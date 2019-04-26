@@ -9,3 +9,4 @@ function verifySession() {
     if (!isset($_SESSION['auth'])) { $_SESSION['auth'] = new AuthenticationModel($_SESSION['db']); }
     if (!isset($_SESSION['films'])) { $_SESSION['films'] = new FilmDAOImpl($_SESSION['db']); }
 }
+
