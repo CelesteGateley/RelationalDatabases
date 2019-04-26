@@ -7,7 +7,7 @@
 
 <?php
 include_once '../controllers/SessionController.php';
-setupSession();
+verifySession();
 if (isset($_SESSION['logged_in']) && $_SESSION['logged_in']) {
     echo "<script type='text/javascript'>alert('You are already logged in!');</script>";
     echo "<script type='text/javascript'>location.href = '../public/index.php';</script>";

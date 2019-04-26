@@ -5,7 +5,7 @@ class DatabaseModel {
     private $conn;
     protected $DB_USER = 'u1755082';
     protected $DB_PASS = '20xCCvC983rD';
-    protected $data = 'mysql:host=localhost;dbname=u1755082;charset=utf8;';
+    protected $data = 'mysql:host=selene.hud.ac.uk;dbname=u1755082;charset=utf8;';
 
     public function __construct() {
         try { $this->conn = new PDO($this->data, $this->DB_USER, $this->DB_PASS); }
@@ -20,10 +20,9 @@ class DatabaseModel {
 
     final public function __sleep() : array { return array(); }
 
-    final public function __wakeup()  {
-        $this->connect();
-    }
+    final public function __wakeup()  { $this->connect(); }
 
+    final public function getLastId(): int { return (int)$this->conn->lastInsertId();}
 
     final public function  getConnection() : PDO { return $this->conn; }
 

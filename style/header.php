@@ -3,7 +3,7 @@
     <div class="login-status">
         <?php
         include '../controllers/SessionController.php';
-        setupSession();
+        verifySession();
         if (isset($_SESSION['email'], $_SESSION['logged_in']) && $_SESSION['logged_in']) {
             echo 'You are logged in as ' . $_SESSION['email'];
         } else {

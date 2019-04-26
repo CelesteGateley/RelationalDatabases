@@ -6,8 +6,6 @@
 <body>
 <?php include '../style/header.php'; ?>
 <?php
-include_once '../controllers/SessionController.php';
-setupSession();
 if (isset($_SESSION['basket'])) {
     echo '<table><tr><th>Item</th><th>Amount</th><th>Remove</th></tr>';
     foreach ($_SESSION['basket'] as $id => $amount) {
@@ -22,7 +20,11 @@ if (isset($_SESSION['basket'])) {
     echo "<script type='text/javascript'>alert('Your basket is empty!');</script>";
     echo "<script type='text/javascript'>location.href = '../public/index.php';</script>";
 }
-
 ?>
+<form action="../controllers/BasketController.php" method="post">
+    <input type="password" name="password">
+    <input type="hidden" name="method" value="purchase">
+    <input type="submit" value="Purchase Basket">
+</form>
 </body>
 </html>

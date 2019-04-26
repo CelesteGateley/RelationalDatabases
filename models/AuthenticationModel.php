@@ -52,6 +52,19 @@ class AuthenticationModel {
         return $emailCount > 0;
     }
 
+    final public function getAddressId(string $email) : int {
+        $customerId = $this->getUserId($email);
+        $prepStatement = $this->databaseModel->getPreparedStatement('SELECT COUNT(addid) FROM fss_CustomerAddress WHERE custid = :id;');
+        $prepStatement->execute(['id' => $customerId]);
+        $hasAddress = $prepStatement->fetchColumn() > 0;
+        if ($hasAddress) {
+            $prepStatement = $this->databaseModel->getPreparedStatement('SELECT addid FROM fss_CustomerAddress WHERE custid = :id;');
+            $prepStatement->execute(['id' => $customerId]);
+            return $prepStatement->fetchAll()[0][0];
+        }
+        return -1;
+    }
+
     /**
      * @param string $email
      * @param string $password

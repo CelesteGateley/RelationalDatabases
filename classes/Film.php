@@ -7,13 +7,15 @@ class Film {
     private $description;
     private $rating;
     private $stock;
+    private $cost;
 
-    public function __construct(int $filmId, string $filmName, string $description, int $ratingId, int $stockCount) {
+    public function __construct(int $filmId, string $filmName, string $description, int $ratingId, int $stockCount, float $cost) {
         $this->id = $filmId;
         $this->name = $filmName;
         $this->description = $description;
         $this->rating = $ratingId;
         $this->stock = $stockCount;
+        $this->cost = $cost;
     }
 
     final public function getId() : int { return $this->id; }
@@ -25,6 +27,8 @@ class Film {
     final public function getRatingId() : string { return $this->rating; }
 
     final public function getStock() : string { return $this->stock; }
+
+    final public function getCost() : string { return $this->cost; }
 
     final public function addStock() : int { $this->stock++; return $this->stock; }
 

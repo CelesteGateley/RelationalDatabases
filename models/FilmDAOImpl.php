@@ -16,7 +16,7 @@ class FilmDAOImpl implements FilmDAO {
         $this->db = $db;
         $res = $this->db->query($this->getFilmQuery);
         foreach ($res as $row) {
-            $film = new Film($row[0], $row[1], $row[2], $row[3], $row[4]);
+            $film = new Film($row[0], $row[1], $row[2], $row[3], $row[4], 5.00);
             $this->filmArray[$row[0]] = $film;
         }
         $res = $this->db->query($this->getRatingQuery);

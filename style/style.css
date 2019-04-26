@@ -15,6 +15,10 @@ div {
     padding-right: 5%;
 }
 
+.product-no-stock {
+    color: darkred;
+}
+
 td {
     text-align: center; border: 1px solid black;
 }
