@@ -2,13 +2,16 @@
 function displayOrders(string $email) {
     verifySession();
     $accId = $_SESSION['auth']->getUserId($email);
-    $prepStm = $_SESSION['db']->getPreparedStatement('SELECT fss_Payment.payid, fss_Payment.paydate, fss_Payment.amount FROM fss_Payment, fss_OnlinePayment WHERE fss_Payment.payid = fss_OnlinePayment.payid AND fss_OnlinePayment.custid = :id');
+    $prepStm = $_SESSION['db']->getPreparedStatement('SELECT fss_Payment.payid, fss_Payment.paydate, RIGHT(fss_CardPayment.cno, 4) AS "Card Number", fss_Payment.amount FROM fss_CardPayment, fss_Payment, fss_OnlinePayment WHERE fss_Payment.payid = fss_OnlinePayment.payid AND fss_CardPayment.payid = fss_OnlinePayment.payid AND fss_OnlinePayment.custid = :id ORDER BY fss_Payment.paydate DESC;');
     $prepStm->execute(['id' => $accId]);
-    echo '<table><tr><th>Date</th><th>Amount</th><th>More Info</th></tr>';
+    echo '<table><tr><th>Date</th><th>Card Number</th><th>Amount</th><th>More Info</th></tr>';
     foreach ($prepStm->fetchAll() as $row) {
         echo '<tr>';
-        echo '<td>' . $row[1] . '</td>';
-        echo '<td>' . $row[2] . '</td>';
+        $expDate = explode('-', $row[1]);
+        $formDate = $expDate[2] . '-' . $expDate[1] . '-' . $expDate[0];
+        echo '<td>' . $formDate . '</td>';
+        echo '<td>******' . $row[2] . '</td>';
+        echo '<td>£' . $row[3] . '</td>';
         echo '<td><form action="../public/orderinfo.php" method="post"><input type="hidden" name="order_id" value="'.$row[0].'"><input type="submit" value="Show Details"></form></td>';
         echo '</tr>';
     }

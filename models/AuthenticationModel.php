@@ -32,6 +32,21 @@ class AuthenticationModel {
         return $this->authenticateUser($id, $password);
     }
 
+    final public function updateAddress(string $addId, string $street, string $city, string $postcode) {
+        $prepStm = $this->databaseModel->getPreparedStatement('UPDATE fss_Address SET addstreet = :street, addcity = :city, addpostcode = :postcode WHERE addid = :id;');
+        $prepStm->execute(['id' => $addId, 'street' => $street, 'city' => $city, 'postcode' => $postcode]);
+
+    }
+
+    final public function setAddress(string $email, string $street, string $city, string $postcode) {
+        $userId = $this->getUserId($email);
+        $prepStm = $this->databaseModel->getPreparedStatement('INSERT INTO fss_Address (addstreet, addcity, addpostcode) VALUES (:street, :city, :postcode);');
+        $prepStm->execute(['street' => $street, 'city' => $city, 'postcode' => $postcode]);
+        $addId = $this->databaseModel->getLastId();
+        $prepStm = $this->databaseModel->getPreparedStatement('INSERT INTO fss_CustomerAddress VALUES (:addid, :custid);');
+        $prepStm->execute(['addid' => $addId, 'custid' => $userId]);
+    }
+
     private function authenticateUser(int $id, string $password) : bool {
         $correctPw = $this->getPassword($id);
         return password_verify($password, $correctPw);
@@ -43,6 +58,16 @@ class AuthenticationModel {
         $newPass = password_hash($newPassword, PASSWORD_DEFAULT);
         $upStatement->execute([':pass' => $newPass, ':id' => $id]);
         return true;
+    }
+
+    final public function updateInfo(string $id, string $name, string $phoneNo, string $email) : int {
+        $cleanEmail = filter_var($email, FILTER_SANITIZE_EMAIL);
+        $phoneNo = str_replace(' ', '', $phoneNo);
+        if (!filter_Var($cleanEmail, FILTER_VALIDATE_EMAIL)) { return -1; }
+        if (!preg_match('/(0|\+44)[1-9][0-9]{9}/', $phoneNo)) { return -2; }
+        $prepStm = $this->databaseModel->getPreparedStatement('UPDATE fss_Person SET personname = :personname, personemail = :email, personphone = :phone WHERE personid = :id;');
+        $prepStm->execute(['id' => $id, 'personname' => $name, 'email' => $email, 'phone' => $phoneNo]);
+        return 0;
     }
 
     private function doesAccountExist(string $email) : bool {
@@ -63,6 +88,36 @@ class AuthenticationModel {
             return $prepStatement->fetchAll()[0][0];
         }
         return -1;
+    }
+
+    final public function getCardInfo(string $email) : array {
+        $prepStm = $this->databaseModel->getPreparedStatement('SELECT COUNT(*) FROM fss_CardPayment, fss_OnlinePayment WHERE fss_OnlinePayment.payid = fss_CardPayment.payid AND fss_OnlinePayment.custid = :id ORDER BY fss_CardPayment.payid DESC LIMIT 1;');
+        $prepStm->execute(['id' => $this->getUserId($email)]);
+        if ($prepStm->fetchColumn() > 0) {
+            $prepStm = $this->databaseModel->getPreparedStatement('SELECT fss_CardPayment.cno, fss_CardPayment.ctype, fss_CardPayment.cexpr FROM fss_CardPayment, fss_OnlinePayment WHERE fss_OnlinePayment.payid = fss_CardPayment.payid AND fss_OnlinePayment.custid = :id ORDER BY fss_CardPayment.payid DESC LIMIT 1;');
+            $prepStm->execute(['id' => $this->getUserId($email)]);
+            $res = $prepStm->fetchAll();
+            $retVal = array();
+            $retVal['cno'] = $res[0][0];
+            $retVal['ctype'] = $res[0][1];
+            $retVal['expmo'] = explode(':', $res[0][2])[0];
+            $retVal['expday'] = explode(':', $res[0][2])[1];
+            return $retVal;
+        }
+        return array();
+
+    }
+
+    final public function getName(string $email) : string {
+        $userId = $this->getUserId($email);
+        $name = $this->databaseModel->query('SELECT personname FROM fss_Person WHERE personid = ' . $userId . ';');
+        return $name[0][0];
+    }
+
+    final public function getPhoneNumber(string $email) : string {
+        $userId = $this->getUserId($email);
+        $name = $this->databaseModel->query('SELECT personphone FROM fss_Person WHERE personid = ' . $userId . ';');
+        return $name[0][0];
     }
 
     /**

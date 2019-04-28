@@ -24,7 +24,8 @@
                 echo '<form action="basket.php"><input type="submit" value="View Basket"></form>';
             }
             echo '<form action="orders.php"><input type="submit" value="View Previous Orders"></form>';
-            echo '<form action="../controllers/LogoutController.php"><input type="submit" value="Logout"></form>';
+            echo '<form action="account.php"><input type="submit" value="Edit Account Details"></form>';
+            echo '<form action="../controllers/LogoutController.php" method="post"><input type="hidden" name="logout" value="true"><input type="submit" value="Logout"></form>';
         } else {
             echo '<form action="login.php"><input type="submit" value="Login"></form>';
             echo '<form action="register.php"><input type="submit" value="Register"></form>';

@@ -15,6 +15,4 @@ interface FilmDAO {
 
     public function takeStock(int $id, int $amount) : int;
 
-
-
 }
