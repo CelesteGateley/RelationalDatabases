@@ -90,6 +90,7 @@ if (isset($_POST['method'])) {
             echo "<script type='text/javascript'>alert('Invalid Phone Number!');</script>";
             echo "<script type='text/javascript'>location.href = '../public/account.php';</script>";
         } else {
+            $_SESSION['email'] = $_POST['email'];
             echo "<script type='text/javascript'>alert('Details Updated Successfully!');</script>";
             echo "<script type='text/javascript'>location.href = '../public/account.php';</script>";
         }
