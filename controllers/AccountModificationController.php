@@ -12,7 +12,7 @@ function verify(string $password) : bool {
 
 function updateDetails(string $email, string $name, string $phone) {
     verifySession();
-    return $_SESSION['auth']->updateInfo($_SESSION['auth']->getAddressId($email), $name, $phone, $email);
+    return $_SESSION['auth']->updateInfo($_SESSION['auth']->getUserId($email), $name, $phone, $email);
 }
 
 function updateAddress(string $email, string $street, string $city, string $postcode) {
