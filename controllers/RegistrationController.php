@@ -13,11 +13,7 @@ function register(string $email, string $password, string $name, string $phone, 
 }
 
 function isNotNull(array $vars) : bool {
-    foreach ($vars as $var) {
-        if ($var == '') {
-            return false;
-        }
-    }
+    foreach ($vars as $var) { if ($var === '') { return false; } }
     return true;
 }
 

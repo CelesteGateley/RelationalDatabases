@@ -1,6 +1,12 @@
 <?php
 /** File Created by u1755082 (Kieran Gateley) for module CIS2360 - Relational Databases and Web Integration */
 include 'SessionController.php';
+
+function isNotNull(array $vars) : bool {
+    foreach ($vars as $var) { if ($var === '' || empty($var)) { return false; } }
+    return true;
+}
+
 function addToBasket($id) {
     verifySession();
     if (!isset($_SESSION['basket'])) {
@@ -91,7 +97,7 @@ function purchaseBasket(string $password, string $cardNo, string $cardType, int 
 }
 
 
-if (isset($_POST['method'], $_POST['id']) || isset($_POST['method'], $_POST['password'], $_POST['card_info'])) {
+if ((isset($_POST['method'], $_POST['id']) && isNotNull([$_POST['method'], $_POST['id']])) || (isset($_POST['method'], $_POST['password'], $_POST['card_info']) && isNotNull([$_POST['method'], $_POST['password'], $_POST['card_info']]))) {
     verifySession();
     if ($_POST['method'] === 'add') {
         addToBasket($_POST['id']);
@@ -107,7 +113,7 @@ if (isset($_POST['method'], $_POST['id']) || isset($_POST['method'], $_POST['pas
                 echo "<script type='text/javascript'>location.href = '../public/basket.php';</script>";
             }
         }
-        if (isset($_POST['card_info']['cardNo'], $_POST['card_info']['cardType'], $_POST['card_info']['cardExp']['expDay'], $_POST['card_info']['cardExp']['expMonth'])) {
+        if (isset($_POST['card_info']['cardNo'], $_POST['card_info']['cardType'], $_POST['card_info']['cardExp']['expDay'], $_POST['card_info']['cardExp']['expMonth']) && isNotNull([$_POST['card_info']['cardNo'], $_POST['card_info']['cardType'], $_POST['card_info']['cardExp']['expDay'], $_POST['card_info']['cardExp']['expMonth']])) {
             purchaseBasket($_POST['password'], $_POST['card_info']['cardNo'], $_POST['card_info']['cardType'], $_POST['card_info']['cardExp']['expDay'], $_POST['card_info']['cardExp']['expMonth']);
         } else {
             echo "<script type='text/javascript'>alert('You need to provide card information!');</script>";
@@ -117,5 +123,6 @@ if (isset($_POST['method'], $_POST['id']) || isset($_POST['method'], $_POST['pas
         echo "<script type='text/javascript'>location.href = '../public/index.php';</script>";
     }
 } else {
-    echo "<script type='text/javascript'>location.href = '../public/index.php';</script>";
+    echo "<script type='text/javascript'>alert('All information must be provided!');</script>";
+    echo "<script type='text/javascript'>location.href = '../public/basket.php';</script>";
 }
