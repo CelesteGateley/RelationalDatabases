@@ -63,8 +63,9 @@ if (isset($_POST['method'])) {
         if ($verification) {
             echo "<script type='text/javascript'>location.href = '../public/account.php';</script>";
         }
-        echo "<script type='text/javascript'>alert('Incorrect Password!');</script>";
-        echo "<script type='text/javascript'>location.href = '../public/verify.php';</script>";
+        echo "<script type='text/javascript'>alert('Incorrect Password! For security reasons, you have been logged out!');</script>";
+        logout();
+        echo "<script type='text/javascript'>location.href = '../public/index.php';</script>";
     } else if ($_POST['method'] === 'update_password' && isset($_POST['current_password'], $_POST['new_password'], $_POST['confirm_password'])) {
         $conf = updatePassword($_SESSION['email'], $_POST['current_password'], $_POST['new_password'], $_POST['confirm_password']);
         if ($conf) {
@@ -92,4 +93,6 @@ if (isset($_POST['method'])) {
             echo "<script type='text/javascript'>location.href = '../public/account.php';</script>";
         }
     }
+} else {
+    echo "<script type='text/javascript'>location.href = '../public/index.php';</script>";
 }

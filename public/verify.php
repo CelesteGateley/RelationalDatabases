@@ -5,6 +5,7 @@
 </head>
 <body>
 <?php include_once '../style/header.php'; ?>
+<?php if (!isset($_SESSION['logged_in']) || !$_SESSION['logged_in']) { echo "<script type='text/javascript'>location.href = '../public/index.php';</script>"; } ?>
 <p>
     <h1>Please Verify Your Identity</h1>
     Please verify you are the account owner before proceeding!
