@@ -13,10 +13,6 @@
         ?>
     </div>
     <div class="account" style="float: right;">
-        <form action="../controllers/ResetSession.php" method="post">
-            <input type="hidden" name="method" value="reset">
-            <input type="submit" value="DEV USE: RESET SESSION">
-        </form>
         <?php
         echo '<form action="index.php"><input type="submit" value="Homepage"></form>';
         if (isset($_SESSION['email'], $_SESSION['logged_in']) && $_SESSION['logged_in']) {
