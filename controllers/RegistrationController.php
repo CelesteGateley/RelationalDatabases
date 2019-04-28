@@ -12,7 +12,18 @@ function register(string $email, string $password, string $name, string $phone, 
     return $res;
 }
 
-if (isset($_POST['email'], $_POST['password'], $_POST['conf_password'], $_POST['name'], $_POST['phone'], $_POST['street'], $_POST['city'], $_POST['postcode'])) {
+function isNotNull(array $vars) : bool {
+    foreach ($vars as $var) {
+        if ($var == '') {
+            return false;
+        }
+    }
+    return true;
+}
+
+
+if (isset($_POST['email'], $_POST['password'], $_POST['conf_password'], $_POST['name'], $_POST['phone'], $_POST['street'], $_POST['city'], $_POST['postcode'])
+    && isNotNull([$_POST['email'], $_POST['password'], $_POST['conf_password'], $_POST['name'], $_POST['phone'], $_POST['street'], $_POST['city'], $_POST['postcode']])) {
      if ($_POST['password'] === $_POST['conf_password']) {
          verifySession();
          $res = register($_POST['email'], $_POST['password'], $_POST['name'], $_POST['phone'], $_SESSION['auth']);
