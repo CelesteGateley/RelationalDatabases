@@ -4,8 +4,7 @@ include_once 'SessionController.php';
 function logout() : bool {
     verifySession();
     if (isset($_SESSION['logged_in']) && $_SESSION['logged_in']) {
-        unset($_SESSION['email'], $_SESSION['basket'], $_SESSION['verify-timeout']);
-        $_SESSION['logged_in'] = false;
+        session_destroy();
         return true;
     }
     return false;
