@@ -91,12 +91,27 @@ function purchaseBasket(string $password, string $cardNo, string $cardType, int 
 
 
 if (isset($_POST['method'], $_POST['id']) || isset($_POST['method'], $_POST['password'], $_POST['card_info'])) {
+    verifySession();
     if ($_POST['method'] === 'add') {
         addToBasket($_POST['id']);
     } else if ($_POST['method'] === 'remove') {
         removeFromBasket($_POST['id']);
     } else if ($_POST['method'] === 'purchase') {
-        purchaseBasket($_POST['password'], $_POST['card_info']['cardNo'], $_POST['card_info']['cardType'], $_POST['card_info']['cardExp']['expDay'], $_POST['card_info']['cardExp']['expMonth']);
+        if (isset($_POST['use_previous']) && $_POST['use_previous'] === 'yes') {
+            $cardInfo = $_SESSION['auth']->getCardInfo($_SESSION['email']);
+            if (!empty($cardInfo)) {
+                purchaseBasket($_POST['password'], $cardInfo['cno'], $cardInfo['ctype'], $cardInfo['expday'], $cardInfo['expmo']);
+            } else {
+                echo "<script type='text/javascript'>alert('You have no previous card info!');</script>";
+                echo "<script type='text/javascript'>location.href = '../public/basket.php';</script>";
+            }
+        }
+        if (isset($_POST['card_info']['cardNo'], $_POST['card_info']['cardType'], $_POST['card_info']['cardExp']['expDay'], $_POST['card_info']['cardExp']['expMonth'])) {
+            purchaseBasket($_POST['password'], $_POST['card_info']['cardNo'], $_POST['card_info']['cardType'], $_POST['card_info']['cardExp']['expDay'], $_POST['card_info']['cardExp']['expMonth']);
+        } else {
+            echo "<script type='text/javascript'>alert('You need to provide card information!');</script>";
+            echo "<script type='text/javascript'>location.href = '../public/basket.php';</script>";
+        }
     } else {
         echo "<script type='text/javascript'>location.href = '../public/index.php';</script>";
     }

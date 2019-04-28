@@ -11,9 +11,9 @@ if (isset($_SESSION['email'])) {
     $cardInfo = $_SESSION['auth']->getCardInfo($_SESSION['email']);
 }
 if (isset($_SESSION['basket'])) {
-    echo '<table><tr><th>Item</th><th>Amount</th><th>Remove</th></tr>';
+    echo '<table><tr><th>Item</th><th>Cost</th><th>Amount</th><th>Remove</th></tr>';
     foreach ($_SESSION['basket'] as $id => $amount) {
-        echo '<tr><td>'.$_SESSION['films']->getFilmById($id)->getName().'</td><td>£'.$amount.'</td>';
+        echo '<tr><td>'.$_SESSION['films']->getFilmById($id)->getName().'</td><td>£'.($_SESSION['films']->getFilmById($id)->getCost()*$amount).'</td></ts><td>'.$amount.'</td>';
         echo '<td><form action="../controllers/BasketController.php" method="post">
               <input type="hidden" name="id" value="'.$id.'"><input type="hidden" name="method" value="remove">
               <input type="submit" value="Remove 1"></form></td>';
@@ -29,11 +29,13 @@ if (isset($_SESSION['basket'])) {
 <form action="../controllers/BasketController.php" method="post">
     <input type="password" name="password" placeholder="Password">
     <div style="padding-left: 10px;">
+        <?php if (!empty($cardInfo)) { echo '<p><input type="checkbox" name="use_previous" value="yes">Use Previous Details';} ?>
         <p style="padding-left: 5px;">
-        <input type="text" name="card_info[cardNo]" placeholder="Card Number" size="10" <?php if(!empty($cardInfo)) { echo 'value="' . $cardInfo['cno'] . '"'; } ?>>
-        <input type="text" name="card_info[cardType]" placeholder="Card Type" size="10" <?php if(!empty($cardInfo)) { echo 'value="' . $cardInfo['ctype'] . '"'; } ?>>
-        <input type="text" name="card_info[cardExp][expDay]" placeholder="Day" size="3" <?php if(!empty($cardInfo)) { echo 'value="' . $cardInfo['expday'] . '"'; } ?>>
-        <input type="text" name="card_info[cardExp][expMonth]" placeholder="Month" size="3" <?php if(!empty($cardInfo)) { echo 'value="' . $cardInfo['expmo'] . '"'; } ?>>
+
+        <input type="text" name="card_info[cardNo]" placeholder="Card Number" size="10">
+        <input type="text" name="card_info[cardType]" placeholder="Card Type" size="10">
+        <input type="text" name="card_info[cardExp][expDay]" placeholder="Day" size="3">
+        <input type="text" name="card_info[cardExp][expMonth]" placeholder="Month" size="3">
         </p>
         <p style="padding-left: 5px;">
         <input type="hidden" name="method" value="purchase">
