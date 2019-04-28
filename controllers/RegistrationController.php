@@ -1,4 +1,5 @@
 <?php
+/** File Created by u1755082 (Kieran Gateley) for module CIS2360 - Relational Databases and Web Integration */
 include 'SessionController.php';
 function register(string $email, string $password, string $name, string $phone, AuthenticationModel $auth) : int {
     $res = $auth->registerUser($email, $password, $name, $phone);

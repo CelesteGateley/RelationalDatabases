@@ -24,5 +24,6 @@ if (isset($_SESSION['logged_in']) && $_SESSION['logged_in']) {
     <input type="submit" value="Login">
 </form>
 <form action="index.php"><input type="submit" value="Previous Page"></form>
+<?php include_once '../style/footer.php'; ?>
 </body>
 </html>

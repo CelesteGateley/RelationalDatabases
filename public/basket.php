@@ -1,3 +1,4 @@
+<!-- File Created by u1755082 (Kieran Gateley) for module CIS2360 - Relational Databases and Web Integration -->
 <html lang="en">
 <head>
     <title>Film Store Basket</title>
@@ -43,5 +44,6 @@ if (isset($_SESSION['basket'])) {
     </div>
     <input type="submit" value="Purchase Basket">
 </form>
+<?php include_once '../style/footer.php'; ?>
 </body>
 </html>

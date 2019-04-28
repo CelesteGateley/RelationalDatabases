@@ -1,5 +1,5 @@
-<?php /** @noinspection MissingReturnTypeInspection */
-
+<?php
+/** File Created by u1755082 (Kieran Gateley) for module CIS2360 - Relational Databases and Web Integration */
 class DatabaseModel {
 
     private $conn;

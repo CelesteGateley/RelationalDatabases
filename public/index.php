@@ -1,3 +1,4 @@
+<!-- File Created by u1755082 (Kieran Gateley) for module CIS2360 - Relational Databases and Web Integration -->
 <html lang="en">
 <?php ini_set('display_errors', 1); ini_set('display_startup_errors', 1); error_reporting(E_ALL); ?>
 <head>
@@ -46,5 +47,6 @@
         ?>
     </table>
 </div>
+<?php include_once '../style/footer.php'; ?>
 </body>
 </html>

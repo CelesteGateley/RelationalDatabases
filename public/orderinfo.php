@@ -1,3 +1,4 @@
+<!-- File Created by u1755082 (Kieran Gateley) for module CIS2360 - Relational Databases and Web Integration -->
 <html lang="en">
 <head>
     <title>Film store</title>
@@ -14,5 +15,6 @@ if (isset($_SESSION['email'], $_SESSION['logged_in']) && $_SESSION['logged_in'])
     echo "<script type='text/javascript'>location.href = '../public/index.php';</script>";
 }
  ?>
+<?php include_once '../style/footer.php'; ?>
 </body>
 </html>

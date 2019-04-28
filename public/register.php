@@ -1,3 +1,4 @@
+<!-- File Created by u1755082 (Kieran Gateley) for module CIS2360 - Relational Databases and Web Integration -->
 <html lang="en">
 <head>
     <title>Bookstore Registration</title>
@@ -26,5 +27,6 @@ if (isset($_SESSION['logged_in']) && $_SESSION['logged_in']) {
     <input type="submit" value="Register">
 </form>
 <form action="index.php"><input type="submit" value="Previous Page"></form>
+<?php include_once '../style/footer.php'; ?>
 </body>
 </html>

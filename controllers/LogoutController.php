@@ -1,4 +1,5 @@
 <?php
+/** File Created by u1755082 (Kieran Gateley) for module CIS2360 - Relational Databases and Web Integration */
 include_once 'SessionController.php';
 function logout() : bool {
     verifySession();

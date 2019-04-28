@@ -11,5 +11,6 @@
         <input type="hidden" name="method" value="verify">
         <input type="submit" value="Verify Password">
     </form>
+<?php include_once '../style/footer.php'; ?>
 </body>
 </html>

@@ -1,4 +1,5 @@
-<?php /** @noinspection TypeUnsafeComparisonInspection */
+<?php
+/** File Created by u1755082 (Kieran Gateley) for module CIS2360 - Relational Databases and Web Integration */
 include_once '../models/DatabaseModel.php';
 include_once '../models/AuthenticationModel.php';
 include_once '../models/FilmDAOImpl.php';
