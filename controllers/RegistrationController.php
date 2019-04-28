@@ -12,7 +12,7 @@ function register(string $email, string $password, string $name, string $phone, 
     return $res;
 }
 
-if (isset($_POST['email'], $_POST['password'], $_POST['conf_password'], $_POST['name'], $_POST['phone'])) {
+if (isset($_POST['email'], $_POST['password'], $_POST['conf_password'], $_POST['name'], $_POST['phone'], $_POST['street'], $_POST['city'], $_POST['postcode'])) {
      if ($_POST['password'] === $_POST['conf_password']) {
          verifySession();
          $res = register($_POST['email'], $_POST['password'], $_POST['name'], $_POST['phone'], $_SESSION['auth']);
@@ -30,6 +30,7 @@ if (isset($_POST['email'], $_POST['password'], $_POST['conf_password'], $_POST['
                  echo "<script type='text/javascript'>location.href = '../public/register.php';</script>";
                  break;
              default:
+                 $_SESSION['auth']->setAddress($_POST['email'], $_POST['street'], $_POST['city'], $_POST['postcode']);
                  echo "<script type='text/javascript'>alert('You have registered successfully!');</script>";
                  echo "<script type='text/javascript'>location.href = '../public/login.php';</script>";
          }

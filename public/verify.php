@@ -6,6 +6,10 @@
 <body>
 <?php include_once '../style/header.php'; ?>
 <p>
+    <h1>Please Verify Your Identity</h1>
+    Please verify you are the account owner before proceeding!
+</p>
+<p>
     <form action="../controllers/AccountModificationController.php" method="post">
         <input type="password" name="value">
         <input type="hidden" name="method" value="verify">

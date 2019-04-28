@@ -12,6 +12,10 @@ if (!(isset($_SESSION['verify-timeout']) && $_SESSION['verify-timeout'] > time()
     echo "<script type='text/javascript'>location.href = '../public/verify.php';</script>";
 } ?>
 <p>
+<h1>Edit Account Information</h1>
+Below is all the information about you we have. To change any of it, fill in the appropriate sections and click the button!
+</p>
+<p>
 <div style="display: inline-block;"> <!-- Set Address -->
 <form action="../controllers/AccountModificationController.php" method="post">
     <br>Street:<br>

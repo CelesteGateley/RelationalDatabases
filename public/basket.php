@@ -7,6 +7,9 @@
 <body>
 <?php include '../style/header.php'; ?>
 <p>
+    <h1>Your Basket</h1>
+Below are all of the items you have put into your basket.
+</p>
 <?php
 if (isset($_SESSION['email'])) {
     $cardInfo = $_SESSION['auth']->getCardInfo($_SESSION['email']);

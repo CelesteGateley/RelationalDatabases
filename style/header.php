@@ -1,5 +1,5 @@
 <!-- Project Created by u1755082 (Kieran Gateley) for module CIS2360 - Relational Databases and Web Integration  -->
-<div id="header" class="header">
+<div id="header-content" class="header-content" style="width: 100%">
     <div class="login-status">
         <?php
         include '../controllers/SessionController.php';

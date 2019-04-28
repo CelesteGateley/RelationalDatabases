@@ -8,6 +8,11 @@
 <body>
 <?php include '../style/header.php'; ?>
 <p>
+<div style="display: block; text-align: center; width: 100%">
+    <h1>Welcome to the u1755082 Film Store</h1>
+    Welcome to my film store, feel free to browse the stock!
+    <p></p>
+</div>
 <div style="display: block; text-align: center; color: red; width: 100%">Films highlighted in red are out of stock!</div>
 <p>
 <?php include_once '../controllers/FilmTable.php'; ?>
