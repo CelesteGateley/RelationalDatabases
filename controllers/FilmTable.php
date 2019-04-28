@@ -1,4 +1,4 @@
-<div class="film-table">
+<div class="film-table" style="overflow: scroll;">
     <table class="product-table">
         <tr>
             <th>Film Name</th>
