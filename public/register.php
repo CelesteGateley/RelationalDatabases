@@ -1,7 +1,7 @@
 <!-- File Created by u1755082 (Kieran Gateley) for module CIS2360 - Relational Databases and Web Integration -->
 <html lang="en">
 <head>
-    <title>Bookstore Registration</title>
+    <title>Film Store Registration</title>
     <link rel="stylesheet" type="text/css" href="../style/style.css">
 </head>
 <body>
